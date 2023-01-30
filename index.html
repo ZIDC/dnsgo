@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://dns.xjqxz.top/index.php/index/index/checkout -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>在线充值</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <script src="./index_files/jquery.min.js.下载"></script>
+    <link href="./index_files/userPay.css" rel="stylesheet">
+    <style>
+        a:link {
+            text-decoration: none;
+        }
+        a:active {
+            text-decoration: blink
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        a:visited {
+            text-decoration: none;
+        }
+        *, :after, :before {
+            /* -webkit-box-sizing: border-box; */
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        button, html input[type=button], input[type=reset], input[type=submit] {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+        .payqrcode{width:100%;height:100%;position:absolute;top:0;align-items: center;justify-content: center;background:rgba(0,0,0,0.5);display:none;}
+        .payqrcode img{width:300px;}
+        .g-pay-ment li.gray6{padding:5px;float:none;}
+        .g-pay-ment li.gray9{padding:5px;}
+    </style>
+</head>
+<body>
+<div id="loadingPicBlock" style="max-width: 720px;margin:0 auto;" class="pay">
+    <header class="g-header">
+
+        <div class="head-r">
+            <a href="https://dns.xjqxz.top/index.php/index/index/control.html" class="z-HReturn" data-dismiss="modal" aria-hidden="true"><s></s><b>返回</b></a>
+        </div>
+    </header>
+    <div class="g-Total gray9" style="color:red;">1元10金币，支付时备注用户名，否则可能无法到账。<!--，即时到账--></div>
+    <div class="g-Total gray9">请选择需要充值的金额</div>
+    <section class="clearfix g-member">
+        <div class="g-Recharge">
+            <ul id="ulOption">
+                <!--注意修改金额 需要同时修改前面的值 money="10" -->
+                <li money="2"><a href="javascript:;">2元<s></s></a></li>
+                <li money="5"><a href="javascript:;">5元<s></s></a></li>
+                <li money="10"><a href="javascript:;" class="z-sel">10元<s></s></a></li> <!--class="z-sel" 表示默认选中10元-->
+                <!--<li money="100"><a href="javascript:;">100元<s></s></a></li>
+                <li money="200"><a href="javascript:;">200元<s></s></a></li>
+                <li money="500"><a href="javascript:;">500元<s></s></a></li>-->
+            </ul>
+        </div>
+        <form action="https://dns.xjqxz.top/index.php/index/index/pay.html" method="post">
+            <article class="clearfix mt10 m-round g-pay-ment g-bank-ct">
+                <ul id="ulBankList">
+                    <li class="gray6">您选择充值：<label class="input" style="border: 1px solid #EAEAEA;font-size:30px;">
+                            <input type="text" name="money" id="price" placeholder="如：10" value="10" style="width: 170px;color: red;font-size:20px;" required="">   <!--默认输入金额值10-->
+                        </label> 元
+                    </li>
+                    <li class="gray6">
+                        充值用户名：<label class="input" style="border: 1px solid #EAEAEA;font-size: 30px;">
+                            <input type="text" name="user" id="user" placeholder="" value="zwjjk" style="width: 180px;font-size: 16px;" readonly="" required="">
+                        </label></li>
+                    <li paytype="1" class="gray9" type="codePay" style="width: 33%">
+                        <a href="javascript:;" class="z-initsel"><img src="./index_files/alipay.jpg"><s></s></a>
+
+                    </li>
+                    <!--<li paytype="2" class="gray9" type="codePay" style="width: 33%">
+                        <a href="javascript:;"><img src="/assets/images/qqpay.jpg"><s></s></a>
+                    </li>-->
+                    <li paytype="3" class="gray9" type="codePay" style="width: 33%">
+                        <a href="javascript:;"><img src="./index_files/wechatpay.jpg"><s></s></a>
+                    </li>
+                </ul>
+            </article>
+            <input type="hidden" id="pay_type" value="1" name="type"> <!--值1表示支付宝默认-->
+            <input type="hidden" value="" name="salt">
+
+            <div class="mt10 f-Recharge-btn">
+                <button id="btnSubmit" type="button" href="javascript:;" class="orgBtn">确认支付</button>
+            </div>
+        </form>
+    </section>
+    <input id="hidIsHttps" type="hidden" value="0">
+    <script>
+        $(function () {
+            var c;
+            var g = false;
+            var a = null;
+            var e = function () {
+                $("#ulOption > li").each(function () {
+                    var n = $(this);
+                    n.click(function () {
+                        g = false;
+                        c = n.attr("money");
+                        n.children("a").addClass("z-sel");
+                        n.siblings().children().removeClass("z-sel").removeClass("z-initsel");
+                        var needMoney = parseFloat(n.attr("money")).toFixed(2);
+                        if (needMoney <= 0)needMoney = 0.01;
+                        $("#price").val(needMoney);
+                    })
+                });
+                $("#ulBankList > li").each(function (m) {
+                    var n = $(this);
+                    n.click(function () {
+                        if (m < 2)return;
+                        $("#pay_type").val(n.attr("payType"));
+                        n.children("a").addClass("z-initsel");
+                        n.siblings().children().removeClass("z-initsel");
+                    })
+                });
+
+            };
+            e(); 
+
+           $(".payqrcode").click(function(){
+             $(this).hide();
+           }) 
+           
+        });
+        $("#btnSubmit").click(function(){
+           var pay_type = $("#pay_type").val();
+           if(pay_type==1){
+              var src= 'https://shp.qpic.cn/collector/2912105449/79bf0267-7faf-4287-8c74-5d0861be046a/0';
+           }
+           if(pay_type==3){
+              var src= 'https://shp.qpic.cn/collector/2912105449/d05b9923-4f7f-46ee-93ff-1674d293cc2b/0';
+           }
+           $('.payqrcode img').attr('src',src);
+           $('.payqrcode').css('display','flex');  
+        })
+    </script>
+</div>
+<div class="payqrcode"><img src="./index_files/alipayq.jpg"></div>
+
+	</body></html>
